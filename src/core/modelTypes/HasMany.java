@@ -15,7 +15,7 @@ import core.dataManipulation.LinkedArray;
 public abstract class HasMany extends ModelType {
 	
 	@Override
-	protected boolean saveComplements(Integer owner_id, LinkedArray complements) {
+	public boolean saveComplements(Integer owner_id, LinkedArray complements) {
 		boolean sucess = true;
 		
 		for (int i = 0; i < models.length; i++)
@@ -24,7 +24,7 @@ public abstract class HasMany extends ModelType {
 				
 				useModel(models[i]);
 				for (int j = 0; j < complement.size(); j++) {
-					LinkedArray part = (LinkedArray) complement.get(i);
+					LinkedArray part = (LinkedArray) complement.get(j);
 					
 					if ( ! part.containsKey(foreignKey))
 						part.add(foreignKey, owner_id);
@@ -40,40 +40,48 @@ public abstract class HasMany extends ModelType {
 	}
 	
 	@Override
-	protected LinkedArray getComplements(Integer owner_id) {
-		LinkedArray complements = new LinkedArray();
-		
-		for (int i = 0; i < models.length; i++) {
-			useModel(models[i]);
-			LinkedArray tmp = model.all(foreignKey + " = '" + owner_id + "'");
-			data.add(models[i], tmp);
+	public LinkedArray getComplements(Integer owner_id) {
+		if (owner_id != null) {
+			LinkedArray complements = new LinkedArray();
+			
+			for (int i = 0; i < models.length; i++) {
+				useModel(models[i]);
+				LinkedArray tmp = model.all(foreignKey + " = '" + owner_id + "'");
+				data.add(models[i], tmp);
+			}
+			
+			return complements;
 		}
-		
-		return complements;
+		System.out.println("Warning: The parameter 'owner_id', sent to getComplements is null!");
+		return null;
 	}
 	
 	@Override
-	protected boolean deleteComplements(Integer owner_id) {
-		LinkedArray complements = getComplements(owner_id);
-		boolean sucess = true;
-		
-		for (int i = 0; i < models.length; i++)
-			if (complements.containsKey(models[i])) {
-				LinkedArray complement = (LinkedArray) complements.get(models[i]);
-				
-				useModel(models[i]);
-				for (int j = 0; j < complement.size(); j++) {
-					LinkedArray part = (LinkedArray) complement.get(i);
-					Integer part_id  = (Integer) part.get(model.getPrimaryKey());
-					
-					if ( ! model.delete(part_id)) {
-						System.out.println("Failed to delete data in " + models[i]);
-						sucess = false;
+	public boolean deleteComplements(Integer owner_id) {
+		if (owner_id != null) {
+			LinkedArray complements = getComplements(owner_id);
+			boolean sucess = true;
+
+			for (int i = 0; i < models.length; i++)
+				if (complements.containsKey(models[i])) {
+					LinkedArray complement = (LinkedArray) complements.get(models[i]);
+
+					useModel(models[i]);
+					for (int j = 0; j < complement.size(); j++) {
+						LinkedArray part = (LinkedArray) complement.get(i);
+						Integer part_id = (Integer) part.get(model.getPrimaryKey());
+
+						if ( ! model.delete(part_id)) {
+							System.out.println("Failed to delete data in " + models[i]);
+							sucess = false;
+						}
 					}
 				}
-			}
-		
-		return sucess;
+
+			return sucess;
+		}
+		System.out.println("Warning: The parameter 'owner_id', sent to deleteComplements is null!");
+		return true;
 	}
 	
 }
