@@ -11,28 +11,38 @@ import core.dataManipulation.LinkedArray;
  * @author Eduardo Jr
  */
 public class PhonesController extends AppController{
+	
+    public LinkedArray create() {
+        if ( ! data.isEmpty()) {
+            System.out.println("Dados recebidos!");		
+            System.out.println((String) data.get("phone"));
+        }
+		if (data.isEmpty()){
+			display("create");
+        }
+		return null;
+	}
    
     public LinkedArray createPhone() {
-            if ( ! data.isEmpty()) {
-                System.out.println("Dados recebidos!");		
-                System.out.println((String) data.get("phone"));
-            }
-            else{
-		display("createPhone");
-            }
+        if ( ! data.isEmpty()) {
+            System.out.println("Dados recebidos!");		
+            System.out.println((String) data.get("phone"));
+        }
+        else{
+			display("createPhone");
+        }
 		
 		return data.isEmpty()? null : data;
     }
     
     public LinkedArray createCell() {
-            if ( ! data.isEmpty()) {
-                System.out.println("Dados recebidos!");		
-                System.out.println((String) data.get("cell"));
-            }
-            else{
-		display("createCell");
-            }
-		
+        if ( ! data.isEmpty()) {
+            System.out.println("Dados recebidos!");		
+            System.out.println((String) data.get("cell"));
+        }
+		else {
+			display("createCell");
+		}		
 		return data.isEmpty()? null : data;
     }
     

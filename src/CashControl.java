@@ -9,10 +9,10 @@ import app.controllers.AppController;
  * @author Macário Martins <macariomartinsjunior@gmail.com>
  *
  */
-public class AppName extends AppController {
+public class CashControl extends AppController {
 
 	public static void main(String args[]) {
-		new AppController().main();
+		new AppController().main(null);
 	}
 	
 }
