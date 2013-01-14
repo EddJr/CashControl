@@ -15,7 +15,7 @@ import core.dataManipulation.LinkedArray;
 public abstract class HasOne extends ModelType {
 	
 	@Override
-	protected boolean saveComplements(Integer owner_id, LinkedArray complements) {
+	public boolean saveComplements(Integer owner_id, LinkedArray complements) {
 		LinkedArray saveSucess = new LinkedArray();
 
 		for (int i = 0; i < models.length; i++)
@@ -25,8 +25,8 @@ public abstract class HasOne extends ModelType {
 				if ( ! complement.containsKey(foreignKey))
 					complement.add(foreignKey, owner_id);
 
-				useModel(models[i]);
-				saveSucess.add(models[i], Boolean.valueOf(model.save(complement)));
+				useModelAux(models[i]);
+				saveSucess.add(models[i], Boolean.valueOf(modelAux.save(complement)));
 			}
 
 		int sucess = 0;
@@ -40,12 +40,12 @@ public abstract class HasOne extends ModelType {
 	}
 	
 	@Override
-	protected LinkedArray getComplements(Integer owner_id) {
+	public LinkedArray getComplements(Integer owner_id) {
 		LinkedArray complements = new LinkedArray();
 		
 		for (int i = 0; i < models.length; i++) {
-			useModel(models[i]);
-			LinkedArray tmp = model.firstBy(foreignKey + " = '" + owner_id + "'");
+			useModelAux(models[i]);
+			LinkedArray tmp = modelAux.firstBy(foreignKey + " = '" + owner_id + "'");
 			data.add(models[i], tmp);
 		}
 		
@@ -53,7 +53,7 @@ public abstract class HasOne extends ModelType {
 	}
 	
 	@Override
-	protected boolean deleteComplements(Integer owner_id) {
+	public boolean deleteComplements(Integer owner_id) {
 		LinkedArray deleteSucess = new LinkedArray();
 		LinkedArray complements  = getComplements(owner_id);
 
@@ -64,9 +64,9 @@ public abstract class HasOne extends ModelType {
 				if ( ! complement.containsKey(foreignKey))
 					complement.add(foreignKey, owner_id);
 
-				useModel(models[i]);
-				Integer complement_id = (Integer) complement.get(model.getPrimaryKey());
-				deleteSucess.add(models[i], Boolean.valueOf(model.delete(complement_id)));
+				useModelAux(models[i]);
+				Integer complement_id = (Integer) complement.get(modelAux.getPrimaryKey());
+				deleteSucess.add(models[i], Boolean.valueOf(modelAux.delete(complement_id)));
 			}
 
 		int sucess = 0;
