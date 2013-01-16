@@ -176,7 +176,7 @@ public class CreateView extends AppView {
 	}//GEN-LAST:event_addEmailButtonActionPerformed
 
 	private void addPhoneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPhoneButtonActionPerformed
-		message("Muito bem, Eduardo!\nAqui você coloca a action que vai levar o usuário\n a adicionar um telefone, seja fixo ou celular. ;)");
+                controller.callAction("newPhone");
 	}//GEN-LAST:event_addPhoneButtonActionPerformed
 
 	private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed

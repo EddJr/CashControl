@@ -12,7 +12,7 @@ import core.dataManipulation.LinkedArray;
  */
 public class PhonesController extends AppController{
 	
-    public LinkedArray create() {
+   /* public LinkedArray create() {
         if ( ! data.isEmpty()) {
             System.out.println("Dados recebidos!");		
             System.out.println((String) data.get("phone"));
@@ -21,29 +21,24 @@ public class PhonesController extends AppController{
 			display("create");
         }
 		return null;
-	}
+	}*/
    
-    public LinkedArray createPhone() {
-        if ( ! data.isEmpty()) {
-            System.out.println("Dados recebidos!");		
-            System.out.println((String) data.get("phone"));
-        }
-        else{
+    public void createPhone() {
+		if (data.isEmpty()){
 			display("createPhone");
-        }
-		
-		return data.isEmpty()? null : data;
+                }
+                else{
+			model.saveComplements(null, data);
+                }
     }
     
-    public LinkedArray createCell() {
-        if ( ! data.isEmpty()) {
-            System.out.println("Dados recebidos!");		
-            System.out.println((String) data.get("cell"));
-        }
-		else {
+    public void createCell() {
+		if (data.isEmpty()){
 			display("createCell");
-		}		
-		return data.isEmpty()? null : data;
+                }
+                else{
+			model.saveComplements(null, data);
+	        }
     }
     
     public boolean validaPhone(String phone){

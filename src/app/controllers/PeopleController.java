@@ -34,5 +34,15 @@ public abstract class PeopleController extends AppController {
 		
 	}
 	
+	public void newPhone() {
+		PhonesController phones = new PhonesController();
+		phones.controllerAux = this;
+		phones.createPhone();
+	}
 	
+	
+	public void getPhone() {
+		
+	}
+        
 }

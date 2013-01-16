@@ -17,7 +17,7 @@ import core.modelTypes.HasMany;
 public class People extends HasMany {
 
 	public People() {
-		models = new String[] {"Emails"};
+		models = new String[] {"Emails, Phones"};
 		setPrefix("people");
 		components.install("DateTime", new DateTimeComponent());
 	}

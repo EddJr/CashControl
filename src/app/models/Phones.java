@@ -4,10 +4,15 @@
  */
 package app.models;
 
+import core.modelTypes.BelongsTo;
+
 /**
  *
  * @author Eduardo Jr
  */
-public class Phones extends AppModel{
-  
+public class Phones extends BelongsTo{
+        	
+        public Phones() {
+		models = new String[] {"People"};
+	}
 }
